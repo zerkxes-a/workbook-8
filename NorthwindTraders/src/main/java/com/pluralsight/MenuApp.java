@@ -1,5 +1,7 @@
 package com.pluralsight;
 
+import org.apache.commons.dbcp2.BasicDataSource;
+
 import java.sql.*;
 
 import java.util.Scanner;
@@ -52,8 +54,13 @@ public class MenuApp {
 
         String query = "SELECT * FROM Products";
 
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setUrl(url);
+        dataSource.setUsername(user);
+        dataSource.setPassword(password);
 
-        try (Connection connection = DriverManager.getConnection(url, user, password);
+
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query);){
             // Establishing connection
             try(ResultSet results = statement.executeQuery()) {
@@ -85,8 +92,13 @@ public class MenuApp {
 
         String query = "SELECT * FROM Customers";
 
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setUrl(url);
+        dataSource.setUsername(user);
+        dataSource.setPassword(password);
 
-        try  (Connection connection = DriverManager.getConnection(url, user, password);
+
+        try (Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);) {
             try(ResultSet results = statement.executeQuery()) {
             System.out.printf("%-25s %-35s %-20s %-20s %-12s%n", "ContactName", "CompanyName", "City", "Country", "Phone");
@@ -117,7 +129,13 @@ public class MenuApp {
 
         String query = "SELECT * FROM Categories";
 
-        try (Connection connection = DriverManager.getConnection(url, user, password);
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setUrl(url);
+        dataSource.setUsername(user);
+        dataSource.setPassword(password);
+
+
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query);){
             // Executing query
 
@@ -153,8 +171,13 @@ public class MenuApp {
 
         String query = "SELECT * FROM Products WHERE CategoryID = ?";
 
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setUrl(url);
+        dataSource.setUsername(user);
+        dataSource.setPassword(password);
 
-        try (Connection connection = DriverManager.getConnection(url, user, password);
+
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query);){
             // Executing query
             statement.setInt(1, categoryID);
